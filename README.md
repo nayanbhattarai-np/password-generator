@@ -1,18 +1,32 @@
-# Password Generator
+# Password Generator 🔐
 
-A secure and customizable **CLI-based password generator** in Python.
+<img src="https://img.shields.io/badge/Python-3.10-blue" alt="Python"> <img src="https://img.shields.io/badge/License-MIT-green" alt="License"> <img src="https://img.shields.io/badge/Release-v1.0.0-orange" alt="Release">
+
+
+
+
+A **secure and customizable password generator** with both **CLI and GUI versions**, made by [Nayan Bhattarai](https://nayanbhattarai.info.np).
 
 ---
 
-### Made by [Nayan Bhattarai](https://nayanbhattarai.info.np)
+## Features ✨
+- 🔒 Secure password generation  
+- 🎨 GUI with password strength indicator  
+- 📋 Copy-to-clipboard functionality  
+- 💻 CLI version for terminal usage  
+- ⚙️ Adjustable password length  
+- ✅ Option to include uppercase letters, numbers, and symbols  
 
-## Features
-- Customizable password length
-- Option to include uppercase letters, numbers, and symbols
-- Command-line interface for easy usage
+---
 
-## Usage
 
-### Run with Python
+
+---
+
+## Installation 🛠️
+
+Clone the repository:
+
 ```bash
-python password_generator.py --length 16 --upper --numbers --symbols
+git clone https://github.com/nayanbhattarai-np/password-generator.git
+cd password-generator
