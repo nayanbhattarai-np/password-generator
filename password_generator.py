@@ -1,37 +1,74 @@
 """
 Password Generator
-Made by Nayan Bhattarai
-Website: https://nayanbhattarai.info.np
+Made by Nayan Bhattarai.
+Website: https://www.nayanbhattarai.info.np/
 """
 
 import random
 import string
-import argparse
 
-def generate_password(length=12, use_upper=True, use_numbers=True, use_symbols=True):
-    chars = string.ascii_lowercase
-    if use_upper:
-        chars += string.ascii_uppercase
-    if use_numbers:
-        chars += string.digits
-    if use_symbols:
-        chars += string.punctuation
+def generate_password(length, min_upper, min_numbers, min_symbols):
+    if length < min_upper + min_numbers + min_symbols:
+        raise ValueError("Password length is too short for the specified minimum requirements.")
 
-    if length < 4:
-        raise ValueError("Password length should be at least 4 characters.")
+    lower_chars = string.ascii_lowercase
+    upper_chars = string.ascii_uppercase
+    number_chars = string.digits
+    symbol_chars = string.punctuation
 
-    return ''.join(random.choice(chars) for _ in range(length))
+    password_chars = []
+
+    for _ in range(min_upper):
+        password_chars.append(random.choice(upper_chars))
+
+    for _ in range(min_numbers):
+        password_chars.append(random.choice(number_chars))
+
+    for _ in range(min_symbols):
+        password_chars.append(random.choice(symbol_chars))
+
+    all_chars = lower_chars + upper_chars + number_chars + symbol_chars
+    remaining_length = length - len(password_chars)
+    password_chars += [random.choice(all_chars) for _ in range(remaining_length)]
+
+    random.shuffle(password_chars)
+    return ''.join(password_chars)
+
+def ask_number(prompt, default=0):
+    while True:
+        try:
+            value = input(prompt).strip()
+            if value == '':
+                return default
+            value = int(value)
+            if value < 0:
+                print("Please enter 0 or a positive number.")
+                continue
+            return value
+        except ValueError:
+            print("Please enter a valid number.")
 
 def main():
-    parser = argparse.ArgumentParser(description="Secure Password Generator")
-    parser.add_argument("-l", "--length", type=int, default=12, help="Length of the password")
-    parser.add_argument("-u", "--upper", action="store_true", help="Include uppercase letters")
-    parser.add_argument("-n", "--numbers", action="store_true", help="Include numbers")
-    parser.add_argument("-s", "--symbols", action="store_true", help="Include symbols")
+    print("Welcome to the Advanced Interactive Password Generator!")
+    print("Created by Nayan Bhattarai - Website: https://www.nayanbhattarai.info.np\n")
 
-    args = parser.parse_args()
-    pwd = generate_password(args.length, args.upper, args.numbers, args.symbols)
-    print(f"Generated Password: {pwd}")
+    while True:
+        length = ask_number("Enter desired password length (minimum 8): ")
+        if length < 8:
+            print("Password length must be at least 8 characters.")
+            continue
+        break
+
+    min_upper = ask_number("Minimum uppercase letters (default 1): ")
+    min_numbers = ask_number("Minimum numbers (default 1): ")
+    min_symbols = ask_number("Minimum symbols (default 1): ")
+
+    try:
+        password = generate_password(length, min_upper, min_numbers, min_symbols)
+        print("\nGenerated Password:", password)
+        print("\nThank you for using this generator! Visit my website for more tools: https://nayanbhattarai.info.np")
+    except ValueError as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()
